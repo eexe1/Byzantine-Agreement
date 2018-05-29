@@ -18,7 +18,7 @@ public struct NodeRenderer {
             NSAttributedStringKey.foregroundColor: UIColor.white
         ]
         
-        let myText = String(node.element)
+        let myText = node.identifier
         let attributedString = NSAttributedString(string: myText, attributes: attributes)
         
         let stringRect = CGRect(x: x - NodeSizes.width/2, y: y - NodeSizes.width/2, width: NodeSizes.width, height: NodeSizes.height)

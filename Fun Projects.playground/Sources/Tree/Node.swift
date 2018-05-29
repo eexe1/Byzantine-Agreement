@@ -1,11 +1,13 @@
 public class Node {
     // ensure each node has a unique element
     public var element: Int
+    public var identifier: String
     public var nodes: [Node]?
     
-    public init(_ element: Int, nodes: [Node]? = nil) {
+    public init(_ element: Int, identifier: String, nodes: [Node]? = nil) {
         self.element = element
         self.nodes = nodes
+        self.identifier = identifier
     }
 }
 
@@ -45,6 +47,6 @@ extension Node {
 extension Node: Equatable {
     public static func == (lhs: Node, rhs: Node) -> Bool {
         return
-            lhs.element == rhs.element
+            lhs.identifier == rhs.identifier
     }
 }

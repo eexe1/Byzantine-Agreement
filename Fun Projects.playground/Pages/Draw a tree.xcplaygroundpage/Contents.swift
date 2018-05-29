@@ -10,13 +10,13 @@ enum GUISize {
     static let height: CGFloat = 500
 }
 
-var tree = Tree.init(Node.init(1))
+var tree = Tree.init(Node.init(1, identifier: "A"))
 
 var root = tree.root
 // node's element has to be unique
-root.add(Node.init(2, nodes: [Node.init(8), Node.init(11), Node.init(6)]))
-root.add(Node.init(3, nodes: [Node.init(5)]))
-root.add(Node.init(4))
+root.add(Node.init(2, identifier: "B", nodes: [Node.init(8, identifier: "C"), Node.init(11, identifier: "D"), Node.init(6, identifier: "E")]))
+root.add(Node.init(3, identifier: "F", nodes: [Node.init(5, identifier: "G"), Node.init(5, identifier: "H"), Node.init(5, identifier: "I")]))
+root.add(Node.init(4, identifier: "J"))
 
 tree.printTree()
 
