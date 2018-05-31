@@ -7,7 +7,7 @@
 */
 /*:
  ## Let's start!
- - [Draw a tree](@next@next)
+ - [EIGByz tree](@next)
  */
 
 

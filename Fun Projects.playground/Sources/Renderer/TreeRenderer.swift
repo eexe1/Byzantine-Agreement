@@ -1,14 +1,12 @@
 import UIKit
 
 enum TreeOffset {
-    static let Node = 2.0
+    static let Node = 1.0
 }
 
 public struct TreeRenderer {
     
     public static func drawTree(_ tree: Tree, width: CGFloat, height: CGFloat) {
-    
-        let numberOfGrids = Int(width/GridSizes.GridUnitSize)
         
         let dic = getTreeDic(tree)
         
@@ -17,7 +15,6 @@ public struct TreeRenderer {
             let pX = Double(coordArray[0])! + TreeOffset.Node
             let pY = Double(coordArray[1])! + TreeOffset.Node
             let (x, y) = coordFromGrid(x: pX, y: pY)
-            NodeRenderer.drawNode(node, x: x, y: y)
             
             if let children = node.nodes {
                 for child in children {
@@ -33,6 +30,8 @@ public struct TreeRenderer {
                     LineRenderer.draw(startX:pCoordX, startY:pCoordY, endX:cCoordX, endY:cCoordY)
                 }
             }
+            
+            NodeRenderer.drawNode(node, x: x, y: y)
             
         }
         

@@ -1,10 +1,44 @@
 //: [Previous](@previous)
+/*:
+ EIG Tree shown in text in Console.
+ 
+ EIG Tree shown in GUI.
+ 
+ aab:0 means an agent receives b says a says 0(Retreat)/1(Attack)
+ 
+ Each upper level node's decision is made by the majority of its leaves.
+ 
+ i.e. branch a shows that 2 attacks 1 retreat, therefore the decision is attack
+ 
+ +-a:0 (not updated by the program yet)
+ 
+ |  |  +-aab:1
+ 
+ |  |  +-aaG:1
+ 
+ |  |  +-aac:0
+ 
+ continue to make decisions until you reach a top most node.
+ 
+ */
+
 import UIKit
 import PlaygroundSupport
 
+
 enum GUISize {
-    static let width: CGFloat = 500
+    static let width: CGFloat = 800
     static let height: CGFloat = 500
+}
+
+enum Constants {
+    // agents excluded the general
+    static let sizeOfAgents = 3
+    // sizeOfAgents > 3 * sizeOfTraitor
+    static let sizeOfTraitor = 1
+    static let sizeOfHonest = sizeOfAgents - sizeOfTraitor
+    // which tree to display
+    static let treeDisplayIndex = 0
 }
 
 
@@ -42,7 +76,7 @@ for agent in agents {
 // since it needs t + 1 round to reach Byzantine Agreement
 for r in 1...Constants.sizeOfTraitor + 1{
     // each round
-    print("round \(r) starts")
+//    print("round \(r) starts")
     for (_, agent) in agents.enumerated() {
         for message in agent!.message {
             if let message = message {
@@ -66,26 +100,32 @@ for r in 1...Constants.sizeOfTraitor + 1{
         printMessage(agent!)
         print("agent: \(agent!.name!) end")
     }
-    print("round \(r) completed")
+//    print("round \(r) completed")
 }
 
-// draw agent1's EIG tree
-var agent1 = agents[0]
-let initialOrder = Message.orderToElement(Order.Attack)
-var root = Node(initialOrder, identifier: agent1!.name! + "0")
-var agent1Tree = Tree.init(root)
-
-// convert
-let messages: [Message?] = agent1!.message
-let dic = Message.convert(messages: messages)
-print("\(dic)")
+// convert each agent to a EIG tree
+var treeArray = [Tree]()
+for agent in agents {
+    if let agent = agent {
+        let root = Node(0, identifier: agent.name! + "r")
+        // convert
+        let messages: [Message?] = agent.message
+        let dic = Message.convert(messages: messages)
+        let tree = TreeGenerator.initTree(agents: agents as! [Agent], dic: dic, root: root)
+        print("----- tree starts -----")
+        tree.printTree()
+        print("----- tree ends -----")
+        treeArray.append(tree)
+    }
+}
 
 UIGraphicsBeginImageContextWithOptions(CGSize(width: GUISize.width, height: GUISize.height), false, 0)
 
 let grid = Grid(bounds: CGRect(x: 0, y: 0, width: GUISize.width, height: GUISize.height))
 grid.draw()
 
-TreeRenderer.drawTree(agent1Tree, width: GUISize.width, height: GUISize.height)
+// we only draw one EIG tree
+TreeRenderer.drawTree(treeArray[Constants.treeDisplayIndex], width: GUISize.width, height: GUISize.height)
 
 let im = UIGraphicsGetImageFromCurrentImageContext()
 UIGraphicsEndImageContext()

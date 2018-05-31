@@ -13,7 +13,7 @@ public class Node {
 
 extension Node {
     public static func printNode(_ node:Node, indent: String = "", isLast: Bool = false) {
-        print(indent + "+-" + String(node.element))
+        print(indent + "+-" + String(node.identifier) + ":" + String(node.element))
         var nextIndext = indent
         nextIndext += isLast ? "   " : "|  "
         if let nodes = node.nodes {

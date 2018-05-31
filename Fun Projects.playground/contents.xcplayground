@@ -2,7 +2,6 @@
 <playground version='6.0' target-platform='ios' display-mode='raw' executeOnSourceChanges='false'>
     <pages>
         <page name='Overview'/>
-        <page name='Draw a tree'/>
         <page name='EIGByz tree'/>
     </pages>
 </playground>
