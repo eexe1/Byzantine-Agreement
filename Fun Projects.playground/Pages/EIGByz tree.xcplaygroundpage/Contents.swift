@@ -112,6 +112,7 @@ for agent in agents {
         let messages: [Message?] = agent.message
         let dic = Message.convert(messages: messages)
         let tree = TreeGenerator.initTree(agents: agents as! [Agent], dic: dic, root: root)
+        
         print("----- tree starts -----")
         tree.printTree()
         print("----- tree ends -----")

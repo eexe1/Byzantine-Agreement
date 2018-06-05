@@ -9,6 +9,7 @@ extension Message {
         // second level: under a node: ab,ac,ad
         // ["a":node,"b":node,"ab":node] stored in same dimension
         var dict = [String: Node]()
+        var maximumLength = 0
         for message in messages {
             var key = ""
             if let message = message {
@@ -17,13 +18,16 @@ extension Message {
                 }
                 let element = orderToElement(message.order)
                 dict[key] = Node.init(element, identifier: key)
+                if key.count > maximumLength {
+                    maximumLength = key.count
+                }
             }
         }
         
         // only include longest chains & exclude keys consisting of same elements
         let result = dict.filter {
             (key, value) in
-            return key.count == 3 && !key.isAllEqual()
+            return key.count == maximumLength && !key.isAllEqual()
         }
         
         return result
